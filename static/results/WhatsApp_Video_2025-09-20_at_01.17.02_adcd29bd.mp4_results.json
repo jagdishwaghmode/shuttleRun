@@ -1,0 +1,35 @@
+{
+  "total_laps": 5,
+  "target_laps": 5,
+  "lap_times": [
+    0.04166308243727598,
+    0.04166308243727601,
+    0.12498924731182792,
+    10.790738351254479
+  ],
+  "distance_pixels": 424.0,
+  "distance_meters": 7.5,
+  "distance": 7.5,
+  "pixels_per_meter": 56.53333333333333,
+  "endpoints": [
+    [
+      212,
+      239
+    ],
+    [
+      636,
+      239
+    ]
+  ],
+  "duration": 11.623999999999999,
+  "processed_frames": 269,
+  "distance_comparison": {
+    "entered_distance": 10.0,
+    "calculated_distance": 7.5,
+    "difference": 2.5,
+    "accuracy_percentage": 75.0,
+    "calibration_method": "calculated"
+  },
+  "video_filename": "WhatsApp_Video_2025-09-20_at_01.17.02_adcd29bd.mp4",
+  "timestamp": "2025-09-20T01:32:53.739321"
+}

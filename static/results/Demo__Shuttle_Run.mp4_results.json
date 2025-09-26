@@ -1,0 +1,39 @@
+{
+  "total_laps": 5,
+  "target_laps": 5,
+  "lap_times": [
+    0.04170833333333332,
+    11.177833333333332,
+    0.041708333333334124,
+    0.12512499999999882,
+    0.04170833333333332,
+    11.177833333333332,
+    0.041708333333334124,
+    0.12512499999999882
+  ],
+  "distance_pixels": 640.0,
+  "distance_meters": 7.5,
+  "distance": 7.5,
+  "pixels_per_meter": 85.33333333333333,
+  "endpoints": [
+    [
+      320,
+      360
+    ],
+    [
+      960,
+      360
+    ]
+  ],
+  "duration": 11.553208333333332,
+  "processed_frames": 277,
+  "distance_comparison": {
+    "entered_distance": 10.0,
+    "calculated_distance": 7.5,
+    "difference": 2.5,
+    "accuracy_percentage": 75.0,
+    "calibration_method": "calculated"
+  },
+  "video_filename": "Demo__Shuttle_Run.mp4",
+  "timestamp": "2025-09-24T01:22:16.365609"
+}

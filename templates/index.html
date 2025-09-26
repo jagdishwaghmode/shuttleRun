@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shuttle Run Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .upload-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px dashed #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .upload-section:hover {
+            border-color: #4facfe;
+            background: #f0f8ff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #4facfe;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 15px;
+            background: #4facfe;
+            color: white;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-weight: 600;
+        }
+
+        .file-input-label:hover {
+            background: #3d8bfe;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results-section {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .result-card h3 {
+            color: #4facfe;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .result-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .lap-times {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .lap-times h3 {
+            color: #4facfe;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .lap-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .lap-item {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .distance-comparison {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #4facfe;
+        }
+
+        .comparison-item h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .comparison-item p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4facfe;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid #c3e6cb;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏃‍♂️ Shuttle Run Assessment</h1>
+            <p>Upload athlete video to analyze performance, track laps, and measure timing</p>
+        </div>
+
+        <div class="main-content">
+            <div class="upload-section">
+                <h2 style="margin-bottom: 20px; color: #333;">Upload Video for Analysis</h2>
+                
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="video">Select Video File:</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="video" name="video" accept="video/*" class="file-input" required>
+                            <label for="video" class="file-input-label">
+                                📹 Choose Video File (MP4, AVI, MOV, MKV)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="target_laps">Target Number of Laps:</label>
+                        <select id="target_laps" name="target_laps" required>
+                            <option value="5">5 Laps</option>
+                            <option value="10" selected>10 Laps</option>
+                            <option value="15">15 Laps</option>
+                            <option value="20">20 Laps</option>
+                            <option value="25">25 Laps</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="known_distance">Known Distance (meters):</label>
+                        <input type="number" id="known_distance" name="known_distance" value="20" min="1" max="100" step="0.1">
+                        <small style="color: #666; font-size: 0.9em;">Standard shuttle run distance is 20 meters (10m each way)</small>
+                    </div>
+
+                    <button type="submit" class="btn" id="submitBtn">
+                        🚀 Analyze Video
+                    </button>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Processing video... This may take a few minutes.</p>
+                    <p id="progressText">Please wait while we analyze your video...</p>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection">
+                <h2 style="margin-bottom: 20px; color: #333;">Analysis Results</h2>
+                
+                <div class="results-grid" id="resultsGrid">
+                    <!-- Results will be populated here -->
+                </div>
+
+                <div class="lap-times" id="lapTimes">
+                    <h3>Lap Times</h3>
+                    <div class="lap-list" id="lapList">
+                        <!-- Lap times will be populated here -->
+                    </div>
+                </div>
+
+                <div class="distance-comparison" id="distanceComparison" style="display: none;">
+                    <h3>Distance Analysis</h3>
+                    <div class="comparison-grid" id="comparisonGrid">
+                        <!-- Distance comparison will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData();
+            const videoFile = document.getElementById('video').files[0];
+            const targetLaps = document.getElementById('target_laps').value;
+            const knownDistance = document.getElementById('known_distance').value;
+            
+            if (!videoFile) {
+                showError('Please select a video file');
+                return;
+            }
+            
+            formData.append('video', videoFile);
+            formData.append('target_laps', targetLaps);
+            formData.append('known_distance', knownDistance);
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('resultsSection').style.display = 'none';
+            
+            // Update progress text
+            const progressText = document.getElementById('progressText');
+            progressText.textContent = 'Uploading video...';
+            
+            try {
+                progressText.textContent = 'Processing video...';
+                
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    showError(result.error);
+                } else {
+                    displayResults(result);
+                }
+            } catch (error) {
+                showError('Error processing video: ' + error.message);
+            } finally {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('submitBtn').disabled = false;
+            }
+        });
+        
+        function displayResults(data) {
+            const resultsGrid = document.getElementById('resultsGrid');
+            const lapList = document.getElementById('lapList');
+            
+            // Clear previous results
+            resultsGrid.innerHTML = '';
+            lapList.innerHTML = '';
+            
+            // Display main metrics
+            const metrics = [
+                { title: 'Total Laps Completed', value: data.total_laps, unit: 'laps' },
+                { title: 'Target Laps', value: data.target_laps, unit: 'laps' },
+                { title: 'Distance Between Endpoints', value: data.distance_meters ? data.distance_meters.toFixed(2) : 'N/A', unit: 'meters' },
+                { title: 'Video Duration', value: data.duration ? data.duration.toFixed(1) : 'N/A', unit: 'seconds' }
+            ];
+            
+            // Add calibration info if available
+            if (data.pixels_per_meter) {
+                metrics.push({ 
+                    title: 'Calibration', 
+                    value: data.pixels_per_meter.toFixed(1), 
+                    unit: 'pixels/meter' 
+                });
+            }
+            
+            // Add distance comparison if available
+            if (data.distance_comparison && Object.keys(data.distance_comparison).length > 0) {
+                const comp = data.distance_comparison;
+                metrics.push({ 
+                    title: 'Distance Accuracy', 
+                    value: comp.accuracy_percentage.toFixed(1), 
+                    unit: '%' 
+                });
+                metrics.push({ 
+                    title: 'Calibration Method', 
+                    value: comp.calibration_method === 'calculated' ? 'AI Calculated' : 'User Entered', 
+                    unit: '' 
+                });
+            }
+            
+            metrics.forEach(metric => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `
+                    <h3>${metric.title}</h3>
+                    <div class="value">${metric.value} ${metric.unit}</div>
+                `;
+                resultsGrid.appendChild(card);
+            });
+            
+            // Display lap times
+            if (data.lap_times && data.lap_times.length > 0) {
+                data.lap_times.forEach((time, index) => {
+                    const lapItem = document.createElement('div');
+                    lapItem.className = 'lap-item';
+                    lapItem.innerHTML = `
+                        <div>Lap ${index + 1}</div>
+                        <div>${time.toFixed(2)}s</div>
+                    `;
+                    lapList.appendChild(lapItem);
+                });
+            } else {
+                lapList.innerHTML = '<div class="lap-item">No lap times recorded</div>';
+            }
+            
+            // Display distance comparison if available
+            if (data.distance_comparison && Object.keys(data.distance_comparison).length > 0) {
+                const comp = data.distance_comparison;
+                const comparisonGrid = document.getElementById('comparisonGrid');
+                comparisonGrid.innerHTML = `
+                    <div class="comparison-item">
+                        <h4>Entered Distance</h4>
+                        <p>${comp.entered_distance.toFixed(2)} meters</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>AI Calculated Distance</h4>
+                        <p>${comp.calculated_distance.toFixed(2)} meters</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Difference</h4>
+                        <p>${comp.difference.toFixed(2)} meters</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Accuracy</h4>
+                        <p style="color: ${comp.accuracy_percentage > 80 ? '#28a745' : comp.accuracy_percentage > 60 ? '#ffc107' : '#dc3545'};">
+                            ${comp.accuracy_percentage.toFixed(1)}%
+                        </p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Calibration Used</h4>
+                        <p>${comp.calibration_method === 'calculated' ? 'AI Calculated (More Accurate)' : 'User Entered (Manual)'}</p>
+                    </div>
+                `;
+                document.getElementById('distanceComparison').style.display = 'block';
+            }
+            
+            // Show results section
+            document.getElementById('resultsSection').style.display = 'block';
+            
+            // Scroll to results
+            document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function showError(message) {
+            // Remove existing error messages
+            const existingError = document.querySelector('.error');
+            if (existingError) {
+                existingError.remove();
+            }
+            
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = message;
+            
+            document.querySelector('.upload-section').appendChild(errorDiv);
+        }
+        
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success';
+            successDiv.textContent = message;
+            
+            document.querySelector('.upload-section').appendChild(successDiv);
+        }
+    </script>
+</body>
+</html>
